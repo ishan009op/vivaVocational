@@ -44,6 +44,7 @@ export default function Navbar() {
                 key={index}
                 whileHover={{ y: -2 }}
                 className="cursor-pointer hover:text-cyan-500 transition"
+                onClick={()=> navigate(`/`)}
               >
                 <a href={`/#${item.toLowerCase()}`}>
                   {item}
