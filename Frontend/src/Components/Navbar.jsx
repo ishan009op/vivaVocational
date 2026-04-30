@@ -45,7 +45,7 @@ export default function Navbar() {
                 whileHover={{ y: -2 }}
                 className="cursor-pointer hover:text-cyan-500 transition"
               >
-                <a href={`#${item.toLowerCase()}`}>
+                <a href={`/#${item.toLowerCase()}`}>
                   {item}
                 </a>
               </motion.li>
