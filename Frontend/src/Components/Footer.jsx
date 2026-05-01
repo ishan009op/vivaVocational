@@ -26,7 +26,7 @@ export default function Footer() {
               whileHover={{ scale: 1.03 }}
               className="text-3xl font-extrabold"
             >
-              Skill<span className="text-cyan-400">Forge</span>
+              VI<span className="text-cyan-400">VA</span>
             </motion.h2>
 
             <p className="mt-5 text-slate-400 leading-relaxed">
@@ -147,7 +147,7 @@ export default function Footer() {
 
                 <div>
                   <p className="text-slate-300 font-medium">
-                    info@skillforge.com
+                    info@Viva.com
                   </p>
 
                   <p className="text-slate-500 text-sm mt-1">
@@ -209,7 +209,7 @@ export default function Footer() {
         <div className="mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 text-sm">
 
           <p>
-            © 2026 SkillForge. All rights reserved.
+            © 2026 Viva. All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">

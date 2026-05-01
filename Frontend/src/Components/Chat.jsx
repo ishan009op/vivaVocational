@@ -57,7 +57,7 @@ export default function Chat() {
             </div>
             <div>
               <h2 className="text-xl font-bold tracking-tight text-slate-800">
-                SkillForge AI <span className="text-blue-600">Assistant</span>
+                Viva AI <span className="text-blue-600">Assistant</span>
               </h2>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -155,7 +155,7 @@ export default function Chat() {
             </motion.button>
           </div>
           <p className="text-center text-[10px] text-slate-400 mt-3 font-medium uppercase tracking-widest">
-            Powered by SkillForge Intelligence
+            Powered by Viva Intelligence
           </p>
         </div>
       </motion.div>

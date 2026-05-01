@@ -31,7 +31,7 @@ export default function Contact() {
             <div className="mt-12 space-y-8">
               {[
                 { icon: <Phone size={24} />, label: "Call Us", value: "+91 98765 43210" },
-                { icon: <Mail size={24} />, label: "Email", value: "hello@skillforge.com" },
+                { icon: <Mail size={24} />, label: "Email", value: "hello@Viva.com" },
                 { icon: <MapPin size={24} />, label: "Location", value: "Ludhiana, Punjab, IN" },
               ].map((item, i) => (
                 <motion.div 
