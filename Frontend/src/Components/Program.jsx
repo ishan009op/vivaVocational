@@ -1,115 +1,139 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
+import { ArrowUpRight, Plus } from "lucide-react";
+
+const programs = [
+  {
+    id: "01",
+    title: "Beginner",
+    category: "Foundation",
+    description: "Deconstructing the basics to build an unbreakable technical foundation.",
+    // Updated: High-quality classroom/learning setting
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
+    accent: "#2563eb",
+  },
+  {
+    id: "02",
+    title: "Professional",
+    category: "Specialization",
+    description: "Bridging the gap between theory and industry-grade performance.",
+    // Updated: Technical workstation/focused work
+    image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1200&auto=format&fit=crop",
+    accent: "#4f46e5",
+  },
+  {
+    id: "03",
+    title: "Internship",
+    category: "Placement",
+    description: "Live project immersion designed to secure high-value employment.",
+    // NEW WORKING URL: Professional collaborative office environment
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
+    accent: "#0891b2",
+  },
+];
 
 export default function Programs() {
-  const programs = [
-    {
-      title: "Beginner Program",
-      duration: "3 Months",
-      students: "1.2k+ Students",
-      image:
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Perfect for beginners starting their vocational learning journey with practical fundamentals.",
-    },
-    {
-      title: "Professional Training",
-      duration: "6 Months",
-      students: "3.5k+ Students",
-      image:
-        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Advanced hands-on training designed to prepare students for real-world industry jobs.",
-    },
-    {
-      title: "Internship Program",
-      duration: "2 Months",
-      students: "800+ Students",
-      image:
-        "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop",
-      description:
-        "Work on live projects, gain experience, and build confidence through internship-based learning.",
-    },
-  ];
+  const containerRef = useRef(null);
 
   return (
-    <section id="programs" className="relative bg-gradient-to-br from-cyan-50 via-white to-blue-50 py-24 px-6 lg:px-12 overflow-hidden">
-
-      {/* Background Glow */}
-      <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-300/20 blur-3xl rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-300/20 blur-3xl rounded-full"></div>
-
-      <div className="relative max-w-7xl mx-auto">
-
-        {/* Heading */}
-        <div className="text-center max-w-3xl mx-auto">
-
-          <p className="text-cyan-600 uppercase tracking-[0.3em] font-semibold">
-            Our Programs
-          </p>
-
-          <h2 className="mt-4 text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
-            Skill-Based Training Programs
+    <div ref={containerRef} className="bg-[#f8fafc] text-slate-900">
+      {/* Intro - Adjusted for Mobile Sizing */}
+      <section className="h-[70vh] md:h-screen flex items-center justify-center px-6">
+        <div className="text-center">
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-blue-600 font-bold tracking-[0.3em] uppercase mb-4 text-xs md:text-sm"
+          >
+            Curriculum 2026
+          </motion.p>
+          <h2 className="text-5xl md:text-9xl font-black tracking-tighter uppercase leading-none">
+            The <span className="text-blue-600 italic">Program.</span>
           </h2>
-
-          <p className="mt-6 text-slate-600 text-lg leading-relaxed">
-            Explore practical learning programs designed to build confidence,
-            improve skills, and create career opportunities.
+          <p className="text-slate-500 mt-6 max-w-md mx-auto text-sm md:text-lg px-4">
+            High-performance tracks engineered for the next generation of builders.
           </p>
         </div>
+      </section>
 
-        {/* Program Cards */}
-        <div className="grid lg:grid-cols-3 gap-8 mt-16">
+      {/* Program Sections */}
+      {programs.map((prog, i) => (
+        <ProgramSection key={i} prog={prog} index={i} />
+      ))}
 
-          {programs.map((program, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.35,
-                delay: index * 0.08,
-              }}
-              whileHover={{
-                y: -6,
-                transition: { duration: 0.18 },
-              }}
-              className="group bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all"
-            >
+      {/* Footer CTA */}
+      <section className="h-[40vh] flex flex-col items-center justify-center bg-white border-t border-slate-100">
+        <h3 className="text-2xl md:text-5xl font-black mb-6 tracking-tight">READY TO TRANSFORM?</h3>
+        <button className="px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all flex items-center gap-3 active:scale-95">
+          APPLY NOW <ArrowUpRight size={20}/>
+        </button>
+      </section>
+    </div>
+  );
+}
 
-              {/* Image */}
-              <div className="overflow-hidden h-64">
-                <img
-                  src={program.image}
-                  alt={program.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                />
+function ProgramSection({ prog }) {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 25 });
+
+  // Parallax: Slower movement for light theme elegance
+  const yImage = useTransform(smoothProgress, [0, 1], ["-10%", "10%"]);
+  const opacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scale = useTransform(smoothProgress, [0, 0.1], [0.95, 1]);
+
+  return (
+    <section ref={sectionRef} className="relative h-[120vh] md:h-[150vh] flex items-center justify-center">
+      <motion.div 
+        style={{ opacity, scale }}
+        className="sticky top-0 h-screen w-full flex items-center px-4 md:px-24"
+      >
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center w-full max-w-7xl mx-auto">
+          
+          {/* CONTENT: Order 2 on mobile (bottom), Order 1 on Desktop (left) */}
+          <div className="order-2 lg:order-1 px-2">
+            <div className="flex items-center gap-3 mb-4 md:mb-6">
+              <span className="text-3xl md:text-5xl font-black text-blue-600/20">
+                {prog.id}
+              </span>
+              <div className="h-[2px] w-8 md:w-12 bg-blue-600" />
+              <span className="text-blue-600 font-bold uppercase tracking-widest text-[10px] md:text-xs">
+                {prog.category}
+              </span>
+            </div>
+            
+            <h3 className="text-4xl md:text-7xl font-black text-slate-900 mb-4 md:mb-8 tracking-tighter uppercase leading-[0.9]">
+              {prog.title}
+            </h3>
+            
+            <p className="text-slate-600 text-base md:text-xl max-w-sm leading-relaxed mb-8 md:mb-10 font-medium">
+              {prog.description}
+            </p>
+
+            <button className="flex items-center gap-4 text-slate-900 group">
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-slate-200 flex items-center justify-center group-hover:bg-blue-600 group-hover:border-blue-600 group-hover:text-white transition-all duration-300">
+                <Plus size={20} className="group-hover:rotate-90 transition-transform" />
               </div>
+              <span className="text-xs md:text-sm font-black uppercase tracking-widest">Syllabus Details</span>
+            </button>
+          </div>
 
-              {/* Content */}
-              <div className="p-7">
+          {/* IMAGE: Order 1 on mobile (top), Order 2 on Desktop (right) */}
+          <div className="order-1 lg:order-2 relative aspect-[16/9] lg:aspect-square overflow-hidden rounded-2xl md:rounded-[2.5rem] shadow-2xl shadow-slate-200 border-4 border-white">
+            <motion.img 
+              style={{ y: yImage, scale: 1.1 }}
+              src={prog.image}
+              className="absolute inset-0 w-full h-full object-cover"
+              alt={prog.title}
+            />
+          </div>
 
-                <div className="flex items-center justify-between text-sm text-slate-500">
-                  <span>{program.duration}</span>
-                  <span>{program.students}</span>
-                </div>
-
-                <h3 className="mt-4 text-2xl font-bold text-slate-900">
-                  {program.title}
-                </h3>
-
-                <p className="mt-4 text-slate-600 leading-relaxed">
-                  {program.description}
-                </p>
-
-                <button className="mt-7 px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-white transition font-semibold shadow-lg shadow-cyan-500/20">
-                  Join Program
-                </button>
-              </div>
-            </motion.div>
-          ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

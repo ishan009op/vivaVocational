@@ -3,7 +3,7 @@ import { ArrowRight, Play, CheckCircle2, Star, ShieldCheck, Zap } from "lucide-r
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen bg-[#FDFDFD] pt-24 pb-12 overflow-hidden">
+    <section id="home" className="relative min-h-screen bg-[#FDFDFD] pt-24 pb-12 overflow-hidden">
       
       {/* Decorative Elements - Organic & Subtle */}
       <div className="absolute top-0 right-0 w-[50%] h-[500px] bg-gradient-to-b from-cyan-50/50 to-transparent rounded-bl-full -z-10 tracking-tighter" />
@@ -102,25 +102,7 @@ export default function Hero() {
               />
               
               {/* Floating Review Card */}
-              <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="absolute bottom-8 -left-6 md:-left-12 bg-white rounded-2xl p-4 shadow-xl border border-slate-50 flex items-center gap-4 max-w-[240px]"
-              >
-                <div className="flex -space-x-3">
-                  {[1,2,3].map(i => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden">
-                      <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" />
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <div className="flex text-orange-400">
-                    {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="currentColor" />)}
-                  </div>
-                  <p className="text-[10px] font-bold text-slate-800 uppercase mt-1">4.9/5 Student Rating</p>
-                </div>
-              </motion.div>
+             
             </div>
 
             {/* Abstract Background Decoration */}

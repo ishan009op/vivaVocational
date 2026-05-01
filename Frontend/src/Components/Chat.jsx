@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { SendHorizonal, Bot } from "lucide-react";
+import { SendHorizonal, Bot, Sparkles, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Chat() {
@@ -12,11 +12,7 @@ export default function Chat() {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const userMessage = {
-      role: "user",
-      text: input,
-    };
-
+    const userMessage = { role: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
@@ -24,96 +20,73 @@ export default function Chat() {
     try {
       const res = await fetch("http://localhost:5000/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
       });
-
       const data = await res.json();
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "bot",
-          text: data.reply,
-        },
-      ]);
+      setMessages((prev) => [...prev, { role: "bot", text: data.reply }]);
     } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "bot",
-          text: "Server error",
-        },
-      ]);
+      setMessages((prev) => [...prev, { role: "bot", text: "I'm having trouble connecting to the server. Please try again later." }]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      chatEndRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-      });
-    }, 100);
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pt-32 px-4 pb-10 overflow-hidden">
-
-      {/* Background Glow */}
-      <div className="fixed top-0 left-0 w-80 h-80 bg-cyan-500/10 blur-3xl rounded-full"></div>
-      <div className="fixed bottom-0 right-0 w-96 h-96 bg-blue-500/10 blur-3xl rounded-full"></div>
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 pt-24 px-4 pb-10 overflow-hidden relative">
+      
+      {/* Dynamic Background Blobs */}
+      <div className="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-100/50 blur-[120px] rounded-full animate-pulse"></div>
+      <div className="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-cyan-100/50 blur-[120px] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
 
       {/* Chat Container */}
       <motion.div
-        initial={{ opacity: 0, y: 25 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
-        className="relative z-10 w-full max-w-4xl h-[82vh] mx-auto bg-white/5 border border-white/10 backdrop-blur-2xl rounded-[2rem] overflow-hidden flex flex-col shadow-2xl"
+        className="relative z-10 w-full max-w-4xl h-[80vh] mx-auto bg-white/80 border border-slate-200 backdrop-blur-xl rounded-[2.5rem] overflow-hidden flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.05)]"
       >
-
         {/* Header */}
-        <div className="border-b border-white/10 px-6 py-5 flex items-center gap-4 bg-slate-900/40 backdrop-blur-xl">
-          
-          <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center text-cyan-400">
-            <Bot size={28} />
+        <div className="border-b border-slate-100 px-8 py-6 flex items-center justify-between bg-white/50">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-200">
+              <Bot size={24} />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold tracking-tight text-slate-800">
+                SkillForge AI <span className="text-blue-600">Assistant</span>
+              </h2>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <p className="text-slate-500 text-xs font-medium">Online & Ready to help</p>
+              </div>
+            </div>
           </div>
-
-          <div>
-            <h2 className="text-2xl font-bold">
-              SkillForge AI Assistant
-            </h2>
-
-            <p className="text-slate-400 text-sm mt-1">
-              Ask about courses, admissions, fees, and programs
-            </p>
-          </div>
+          <Sparkles className="text-slate-300" size={20} />
         </div>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-5 py-6 pb-10 space-y-5">
-
+        {/* Messages Area */}
+        <div className="flex-1 overflow-y-auto px-6 py-8 space-y-6 scrollbar-thin scrollbar-thumb-slate-200">
           {messages.length === 0 && (
             <div className="h-full flex items-center justify-center">
-              <div className="text-center max-w-md">
-                
-                <div className="w-20 h-20 rounded-full bg-cyan-500/10 border border-cyan-400/20 flex items-center justify-center mx-auto text-cyan-400">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center max-w-sm"
+              >
+                <div className="w-20 h-20 rounded-3xl bg-slate-50 border border-slate-100 flex items-center justify-center mx-auto text-blue-600 shadow-sm mb-6">
                   <Bot size={40} />
                 </div>
-
-                <h3 className="mt-6 text-3xl font-bold">
-                  Welcome to SkillForge AI
-                </h3>
-
-                <p className="mt-4 text-slate-400 leading-relaxed">
-                  Get instant answers about vocational courses, training
-                  programs, admissions, timings, and more.
+                <h3 className="text-2xl font-extrabold text-slate-800">How can I help today?</h3>
+                <p className="mt-3 text-slate-500 leading-relaxed">
+                  Ask me about <span className="text-blue-600 font-semibold">admissions</span>, 
+                  <span className="text-blue-600 font-semibold"> course fees</span>, or 
+                  <span className="text-blue-600 font-semibold"> technical programs</span>.
                 </p>
-              </div>
+              </motion.div>
             </div>
           )}
 
@@ -121,68 +94,69 @@ export default function Chat() {
             {messages.map((msg, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-                className={`flex ${
-                  msg.role === "user"
-                    ? "justify-end"
-                    : "justify-start"
-                }`}
+                initial={{ opacity: 0, x: msg.role === "user" ? 20 : -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
-                <div
-                  className={`max-w-[80%] px-5 py-4 rounded-3xl text-sm leading-relaxed shadow-lg ${
+                <div className={`flex gap-3 max-w-[85%] ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-auto shadow-sm ${
+                    msg.role === "user" ? "bg-slate-800 text-white" : "bg-white border border-slate-200 text-blue-600"
+                  }`}>
+                    {msg.role === "user" ? <User size={14} /> : <Bot size={14} />}
+                  </div>
+                  
+                  <div className={`px-5 py-4 rounded-[2rem] text-[15px] leading-relaxed shadow-sm ${
                     msg.role === "user"
-                      ? "bg-cyan-500 text-white rounded-br-md"
-                      : "bg-slate-900 border border-white/10 text-slate-200 rounded-bl-md"
-                  }`}
-                >
-                  {msg.text}
+                      ? "bg-gradient-to-tr from-blue-600 to-blue-500 text-white rounded-br-none"
+                      : "bg-white border border-slate-100 text-slate-700 rounded-bl-none"
+                  }`}>
+                    {msg.text}
+                  </div>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
 
-          {/* Typing Indicator */}
           {loading && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex justify-start"
-            >
-              <div className="bg-slate-900 border border-white/10 text-slate-400 px-5 py-4 rounded-3xl rounded-bl-md text-sm">
-                AI is typing...
+            <div className="flex justify-start items-center gap-3">
+               <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-sm">
+                <Bot size={14} />
               </div>
-            </motion.div>
+              <div className="bg-white border border-slate-100 px-5 py-4 rounded-[2rem] rounded-bl-none">
+                <div className="flex gap-1">
+                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce"></div>
+                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                  <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                </div>
+              </div>
+            </div>
           )}
-
-          <div ref={chatEndRef} className="h-2" />
+          <div ref={chatEndRef} />
         </div>
 
-        {/* Input */}
-        <div className="border-t border-white/10 p-5 bg-slate-900/40 backdrop-blur-xl">
-          <div className="flex items-center gap-3">
-
+        {/* Input Area */}
+        <div className="p-6 bg-white/50 backdrop-blur-md border-t border-slate-100">
+          <div className="flex items-center gap-3 bg-white border border-slate-200 p-2 rounded-[2rem] shadow-sm focus-within:border-blue-400 focus-within:ring-4 focus-within:ring-blue-50 transition-all">
             <input
               type="text"
-              placeholder="Ask something..."
+              placeholder="Type your question here..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) =>
-                e.key === "Enter" && sendMessage()
-              }
-              className="flex-1 bg-slate-900/70 border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-cyan-400 transition text-white placeholder:text-slate-500"
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              className="flex-1 bg-transparent px-5 py-3 outline-none text-slate-700 placeholder:text-slate-400"
             />
-
             <motion.button
-              whileHover={{ scale: 1.04 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={sendMessage}
-              className="w-14 h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-400 transition flex items-center justify-center shadow-lg shadow-cyan-500/20"
+              className="w-12 h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-colors shadow-lg shadow-blue-200"
             >
-              <SendHorizonal size={22} />
+              <SendHorizonal size={20} />
             </motion.button>
           </div>
+          <p className="text-center text-[10px] text-slate-400 mt-3 font-medium uppercase tracking-widest">
+            Powered by SkillForge Intelligence
+          </p>
         </div>
       </motion.div>
     </div>

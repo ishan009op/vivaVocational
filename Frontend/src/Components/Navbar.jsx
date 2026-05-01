@@ -17,11 +17,13 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Courses", href: "/courses" },
-    { name: "Programs", href: "/programs" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+  const navLinks = [{
+    name:"Home",href:"#home"
+  },
+    { name: "Courses", href: "#courses" },
+    { name: "Programs", href: "#programs" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -55,12 +57,14 @@ export default function Navbar() {
           {navLinks.map((item) => (
             <li key={item.name}>
               <button
-                onClick={() => navigate(item.href)}
+                onClick={() => navigate('')}
                 className={`text-sm font-semibold transition-all hover:text-cyan-500 ${
-                  isScrolled ? "text-slate-600" : "text-white/80"
+                  isScrolled ? "text-slate-600" : "text-slate-600"
                 }`}
               >
+                <a href={item.href}>
                 {item.name}
+                </a>
               </button>
             </li>
           ))}
